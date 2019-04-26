@@ -7,7 +7,7 @@
     android:id="@+id/ll_main"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
-    <android.support.v4.view.ViewPager
+    <com.up.uwei.shshop.view.NoSwipeViewPager
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

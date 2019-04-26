@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.up.uwei.shshop.R;
 import com.up.uwei.shshop.fragment.NavFragment;
+import com.up.uwei.shshop.view.NoSwipeViewPager;
 
 import java.util.ArrayList;
 
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity  {
-    @BindView(R.id.viewPager) ViewPager mViewPager;
+    @BindView(R.id.viewPager) NoSwipeViewPager mViewPager;
     @BindView(R.id.iv_nav) ImageView mIvNav;
     @BindView(R.id.tv_nav) TextView mTvNav;
     @BindView(R.id.iv_shop) ImageView mIvShop;
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity  {
                 }else {
                     clearTab();
                     mCurrentTab = 0;
+                    mViewPager.setCurrentItem(0, false);
                     mIvNav.setSelected(true);
                 }
                 break;
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity  {
                 }else {
                     clearTab();
                     mCurrentTab = 1;
+                    mViewPager.setCurrentItem(1, false);
                     mIvShop.setSelected(true);
                 }
                 break;
@@ -85,6 +89,7 @@ public class MainActivity extends AppCompatActivity  {
                 }else {
                     clearTab();
                     mCurrentTab = 3;
+                    mViewPager.setCurrentItem(2, false);
                     mIvAdvice.setSelected(true);
                 }
                 break;
@@ -94,6 +99,7 @@ public class MainActivity extends AppCompatActivity  {
                 }else {
                     clearTab();
                     mCurrentTab = 4;
+                    mViewPager.setCurrentItem(3, false);
                     mIvMine.setSelected(true);
                 }
                 break;
@@ -116,12 +122,13 @@ public class MainActivity extends AppCompatActivity  {
         mTabName.add("发布");
         mTabName.add("推荐");
         mTabName.add("我的");
-        mFragments.add(NavFragment.newInstance());
-        mFragments.add(NavFragment.newInstance());
-        mFragments.add(NavFragment.newInstance());
-        mFragments.add(NavFragment.newInstance());
-        mFragments.add(NavFragment.newInstance());
+        mFragments.add(NavFragment.newInstance(1));
+        mFragments.add(NavFragment.newInstance(2));
+        mFragments.add(NavFragment.newInstance(3));
+        mFragments.add(NavFragment.newInstance(4));
         mViewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        mViewPager.setCanSwipe(false);
+        mIvNav.setSelected(true);
     }
 
 
