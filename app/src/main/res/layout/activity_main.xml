@@ -7,6 +7,36 @@
     android:id="@+id/ll_main"
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/mainColor"
+            android:focusable="true"
+            android:padding="10dp"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/title"/>
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:gravity="bottom"
+                android:id="@+id/tv_search_hint"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_input"
+                android:textColor="@color/search_hint"
+                android:text="快速搜索"
+                android:drawableLeft="@drawable/ic_search"/>
+            <ImageView
+                android:scaleType="centerInside"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_navibar_scan"/>
+        </LinearLayout>
     <com.up.uwei.shshop.view.NoSwipeViewPager
         android:layout_width="match_parent"
         android:layout_height="0dp"

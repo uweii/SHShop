@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SHShop</string>
+    <string name="search_hint">搜点什么吧</string>
 </resources>

@@ -1,16 +1,22 @@
 package com.up.uwei.shshop.activity;
 
+import android.content.Context;
+import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity  {
     @BindView(R.id.ll_add) LinearLayout mLlAdd;
     @BindView(R.id.ll_advice) LinearLayout mLlAdvice;
     @BindView(R.id.ll_mine) LinearLayout mLlMine;
+    @BindView(R.id.tv_search_hint) TextView mTvSearchHint;
 
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTabName;
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
@@ -103,6 +111,8 @@ public class MainActivity extends AppCompatActivity  {
                     mIvMine.setSelected(true);
                 }
                 break;
+            case R.id.tv_search_hint:
+                break;
         }
     }
 
@@ -129,6 +139,7 @@ public class MainActivity extends AppCompatActivity  {
         mViewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         mViewPager.setCanSwipe(false);
         mIvNav.setSelected(true);
+
     }
 
 
@@ -167,6 +178,7 @@ public class MainActivity extends AppCompatActivity  {
             return mTabName.get(position);
         }
     }
+
 
 
 }
