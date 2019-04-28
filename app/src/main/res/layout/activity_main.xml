@@ -11,30 +11,32 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/mainColor"
-            android:focusable="true"
-            android:padding="10dp"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:scaleType="centerInside"
                 android:src="@mipmap/title"/>
             <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_gravity="center_vertical"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:gravity="bottom"
                 android:id="@+id/tv_search_hint"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:layout_height="40dp"
                 android:background="@drawable/bg_input"
                 android:textColor="@color/search_hint"
                 android:text="快速搜索"
                 android:drawableLeft="@drawable/ic_search"/>
             <ImageView
-                android:scaleType="centerInside"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="25dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_height="match_parent"
                 android:src="@drawable/ic_navibar_scan"/>
         </LinearLayout>
     <com.up.uwei.shshop.view.NoSwipeViewPager

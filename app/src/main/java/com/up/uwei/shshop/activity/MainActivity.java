@@ -124,6 +124,8 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private void init(){
+        //设置状态栏颜色为黑色
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         mFragments = new ArrayList<>();
         mTabName = new ArrayList<>();
         mTabIcons = new ArrayList<>();
