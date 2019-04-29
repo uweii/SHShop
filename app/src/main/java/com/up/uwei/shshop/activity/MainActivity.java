@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity  {
     @BindView(R.id.iv_nav) ImageView mIvNav;
     @BindView(R.id.tv_nav) TextView mTvNav;
     @BindView(R.id.iv_shop) ImageView mIvShop;
-    @BindView(R.id.tv_shop) TextView mTVShop;
+    @BindView(R.id.tv_shop) TextView mTvShop;
     @BindView(R.id.iv_add) ImageView mIvAdd;
     @BindView(R.id.tv_add) TextView mTvAdd;
     @BindView(R.id.iv_advice) ImageView mIvAdvice;
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity  {
                     mCurrentTab = 0;
                     mViewPager.setCurrentItem(0, false);
                     mIvNav.setSelected(true);
+                    mTvNav.setSelected(true);
                 }
                 break;
             case R.id.ll_shop:
@@ -86,6 +87,7 @@ public class MainActivity extends AppCompatActivity  {
                     mCurrentTab = 1;
                     mViewPager.setCurrentItem(1, false);
                     mIvShop.setSelected(true);
+                    mTvShop.setSelected(true);
                 }
                 break;
             case R.id.ll_add:
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity  {
                     mCurrentTab = 3;
                     mViewPager.setCurrentItem(2, false);
                     mIvAdvice.setSelected(true);
+                    mTvAdvice.setSelected(true);
                 }
                 break;
             case R.id.ll_mine:
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity  {
                     mCurrentTab = 4;
                     mViewPager.setCurrentItem(3, false);
                     mIvMine.setSelected(true);
+                    mTvMine.setSelected(true);
                 }
                 break;
             case R.id.tv_search_hint:
@@ -118,14 +122,18 @@ public class MainActivity extends AppCompatActivity  {
 
     private void clearTab(){
         mIvShop.setSelected(false);
+        mTvShop.setSelected(false);
         mIvNav.setSelected(false);
+        mTvNav.setSelected(false);
         mIvAdvice.setSelected(false);
+        mTvAdvice.setSelected(false);
         mIvMine.setSelected(false);
+        mTvMine.setSelected(false);
     }
 
     private void init(){
         //设置状态栏颜色为黑色
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         mFragments = new ArrayList<>();
         mTabName = new ArrayList<>();
         mTabIcons = new ArrayList<>();
@@ -141,7 +149,7 @@ public class MainActivity extends AppCompatActivity  {
         mViewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         mViewPager.setCanSwipe(false);
         mIvNav.setSelected(true);
-
+        mTvNav.setSelected(true);
     }
 
 

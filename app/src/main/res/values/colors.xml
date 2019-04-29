@@ -9,4 +9,6 @@
     <color name="bg_table">#ece7e7</color>
     <color name="bold_text_color_black">#000006</color>
     <color name="text_color_normal">#797979</color>
+    <color name="green_kuan">#0F9C57</color>
+    <color name="bg_nav">#F2F2F2</color>
 </resources>
