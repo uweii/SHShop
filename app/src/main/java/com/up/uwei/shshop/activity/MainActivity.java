@@ -24,6 +24,9 @@ import android.widget.Toast;
 
 import com.up.uwei.shshop.R;
 import com.up.uwei.shshop.fragment.NavFragment;
+import com.up.uwei.shshop.fragment.SelfFragment;
+import com.up.uwei.shshop.fragment.ShopFragment;
+import com.up.uwei.shshop.fragment.StarFragment;
 import com.up.uwei.shshop.view.NoSwipeViewPager;
 
 import java.util.ArrayList;
@@ -142,10 +145,10 @@ public class MainActivity extends AppCompatActivity  {
         mTabName.add("发布");
         mTabName.add("推荐");
         mTabName.add("我的");
-        mFragments.add(NavFragment.newInstance(1));
-        mFragments.add(NavFragment.newInstance(2));
-        mFragments.add(NavFragment.newInstance(3));
-        mFragments.add(NavFragment.newInstance(4));
+        mFragments.add(NavFragment.newInstance());
+        mFragments.add(ShopFragment.newInstance());
+        mFragments.add(StarFragment.newInstance());
+        mFragments.add(SelfFragment.newInstance());
         mViewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
         mViewPager.setCanSwipe(false);
         mIvNav.setSelected(true);
@@ -167,6 +170,10 @@ public class MainActivity extends AppCompatActivity  {
 
 
     class PagerAdapter extends FragmentPagerAdapter{
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            //super.destroyItem(container, position, object);  不会销毁fragment
+        }
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);

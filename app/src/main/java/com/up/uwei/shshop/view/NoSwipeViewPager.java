@@ -23,4 +23,5 @@ public class NoSwipeViewPager extends ViewPager {
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         return canSwipe && super.onInterceptTouchEvent(ev);
     }
+
 }

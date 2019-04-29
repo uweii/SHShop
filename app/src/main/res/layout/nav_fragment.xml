@@ -3,6 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_nav_green">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -277,10 +281,8 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_rent"
                             android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
-                            />
+                            android:layout_alignParentRight="true" />
                     </RelativeLayout>
-
                 </TableRow>
                 <TableRow
                     android:background="@color/bg_table"
@@ -387,7 +389,20 @@
                         android:layout_alignParentRight="true" />
                 </RelativeLayout>
             </TableRow>
-
             </TableLayout>
     </LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/bg_panel"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/vp_photo_advice"
+        android:layout_marginBottom="20dp">
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>
+
 </LinearLayout>
