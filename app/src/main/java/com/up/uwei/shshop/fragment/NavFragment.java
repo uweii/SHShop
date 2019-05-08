@@ -21,7 +21,6 @@ import com.up.uwei.shshop.MyApplication;
 import com.up.uwei.shshop.R;
 import com.up.uwei.shshop.adapter.ShopRecylerViewAdapter;
 import com.up.uwei.shshop.utils.LogUtil;
-import com.up.uwei.shshop.view.MyPagerTransfomer;
 
 import org.reactivestreams.Subscription;
 
@@ -90,7 +89,6 @@ public class NavFragment extends BaseFragment {
         }
         LunBoAdapter adapter = new LunBoAdapter(getChildFragmentManager());
         mVpPhoto.setAdapter(adapter);
-        mVpPhoto.setPageTransformer(true, new MyPagerTransfomer());
         startChange();
         mVpPhoto.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
