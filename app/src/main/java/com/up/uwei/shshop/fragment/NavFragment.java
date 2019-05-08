@@ -14,8 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+import com.up.uwei.shshop.BaseFragment;
+import com.up.uwei.shshop.Configs;
+import com.up.uwei.shshop.MyApplication;
 import com.up.uwei.shshop.R;
 import com.up.uwei.shshop.adapter.ShopRecylerViewAdapter;
+import com.up.uwei.shshop.utils.LogUtil;
+import com.up.uwei.shshop.view.MyPagerTransfomer;
 
 import org.reactivestreams.Subscription;
 
@@ -35,9 +41,19 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-public class NavFragment extends Fragment {
-    @BindView(R.id.vp_photo_advice) ViewPager mVpPhoto;
 
+
+
+//遗留bug，viewpager的第一个fragment隐藏后，任然后台在轮播图片
+
+
+
+
+
+
+public class NavFragment extends BaseFragment {
+    @BindView(R.id.vp_photo_advice) ViewPager mVpPhoto;
+    private View mFragmentView;
     private static String TAG = "NavFragment";
     private Unbinder mUnbinder;
     private Disposable mDisposable;
@@ -56,17 +72,15 @@ public class NavFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("Test", "onCreate");
-
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e("Test", "onCreateView");
-        View  v = inflater.inflate(R.layout.nav_fragment, container,false);
-        mUnbinder = ButterKnife.bind(this, v);
+        mFragmentView = inflater.inflate(R.layout.nav_fragment, container, false);
+        ButterKnife.bind(this, mFragmentView);
         init();
-        return v;
+        return mFragmentView;
     }
 
     private void init(){
@@ -76,24 +90,41 @@ public class NavFragment extends Fragment {
         }
         LunBoAdapter adapter = new LunBoAdapter(getChildFragmentManager());
         mVpPhoto.setAdapter(adapter);
+        mVpPhoto.setPageTransformer(true, new MyPagerTransfomer());
         startChange();
+        mVpPhoto.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mCurrent = position;
+                mDisposable.dispose();
+                mObservable.subscribe(mObserver);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(null != mDisposable ){
+            if (mDisposable.isDisposed())
+                return;
+            mDisposable.dispose();
+        }
+    }
+
     private void startChange(){
         mCurrent = mVpPhoto.getCurrentItem();
-        /*new Timer().schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mVpPhoto.setCurrentItem(++mCurrent);
-                            }
-                        });
-                        if (mCurrent == 4)
-                            mCurrent = 0;
-                    }
-                },1500,2000);*/
-        mObservable = Observable.interval(1500, 1500, TimeUnit.MILLISECONDS)
+        mObservable = Observable.interval(3000, 3000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread());
         mObserver = new Observer() {
             @Override
@@ -105,8 +136,8 @@ public class NavFragment extends Fragment {
             public void onNext(Object o) {
                 Log.d(TAG, "i am running");
                 mVpPhoto.setCurrentItem(++mCurrent);
-                if(mCurrent == 4)
-                    mCurrent = 0;
+                if(mCurrent == 5)
+                    mCurrent = -1;
             }
 
             @Override
@@ -126,21 +157,19 @@ public class NavFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "onDetach=======");
-        mDisposable.dispose();
     }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser){
-            if (mDisposable != null && mDisposable.isDisposed()){
+        LogUtil.d("Visiblity:  =======> " + isVisibleToUser );
+        if(isVisibleToUser){
+            if (null != mObservable)
                 mObservable.subscribe(mObserver);
-            }
-            Log.d(TAG, "isVisible");
-        }else{
-            Log.d(TAG, "unVisible");
-            if (mDisposable != null && mDisposable.isDisposed()){
+        }else {
+            if(null != mDisposable ){
+                if (mDisposable.isDisposed())
+                    return;
                 mDisposable.dispose();
             }
         }
@@ -150,6 +179,9 @@ public class NavFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume======");
+        if(mDisposable.isDisposed()){
+            mObservable.subscribe(mObserver);
+        }
     }
 
     class LunBoAdapter extends FragmentPagerAdapter{
@@ -170,13 +202,19 @@ public class NavFragment extends Fragment {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //super.destroyItem(container, position, object); 不会销毁fragment
+            //super.destroyItem(container, position, object); //不会销毁fragment
         }
     }
 
     @Override
     public void onDestroyView() {
-        mUnbinder.unbind();
         super.onDestroyView();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 }

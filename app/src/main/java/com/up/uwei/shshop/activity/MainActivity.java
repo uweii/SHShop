@@ -1,7 +1,9 @@
 package com.up.uwei.shshop.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,11 +24,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.up.uwei.shshop.Configs;
 import com.up.uwei.shshop.R;
 import com.up.uwei.shshop.fragment.NavFragment;
 import com.up.uwei.shshop.fragment.SelfFragment;
 import com.up.uwei.shshop.fragment.ShopFragment;
 import com.up.uwei.shshop.fragment.StarFragment;
+import com.up.uwei.shshop.utils.LogUtil;
 import com.up.uwei.shshop.view.NoSwipeViewPager;
 
 import java.util.ArrayList;
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity  {
                 break;
             case R.id.ll_add:
                 Toast.makeText(this, "发布宝贝", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, PublishActivity.class));
                 break;
             case R.id.ll_advice:
                 if(mCurrentTab == 3){
@@ -153,6 +158,7 @@ public class MainActivity extends AppCompatActivity  {
         mViewPager.setCanSwipe(false);
         mIvNav.setSelected(true);
         mTvNav.setSelected(true);
+
     }
 
 
@@ -172,7 +178,7 @@ public class MainActivity extends AppCompatActivity  {
     class PagerAdapter extends FragmentPagerAdapter{
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            //super.destroyItem(container, position, object);  不会销毁fragment
+            //super.destroyItem(container, position, object);  //不会销毁fragment
         }
 
         public PagerAdapter(FragmentManager fm) {

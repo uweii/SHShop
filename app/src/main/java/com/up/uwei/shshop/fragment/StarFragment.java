@@ -10,12 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.up.uwei.shshop.BaseFragment;
 import com.up.uwei.shshop.R;
 import com.up.uwei.shshop.adapter.ShopRecylerViewAdapter;
 
 import java.util.ArrayList;
 
-public class StarFragment extends Fragment {
+public class StarFragment extends BaseFragment {
     private ArrayList<Integer> mImgs;
     private ShopRecylerViewAdapter mAdapter;
     public static StarFragment newInstance(){

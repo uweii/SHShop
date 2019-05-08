@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.up.uwei.shshop.BaseFragment;
 import com.up.uwei.shshop.R;
 
 import butterknife.BindView;
@@ -19,7 +20,7 @@ import butterknife.Unbinder;
 /*
 * 放在viewpager里面，作为轮播图
 * */
-public class PicFragment extends Fragment {
+public class PicFragment extends BaseFragment {
     @BindView(R.id.iv_container) ImageView mImageView;
     private Unbinder mUnbinder;
     private int type;
@@ -42,15 +43,15 @@ public class PicFragment extends Fragment {
 
     public void init(){
         if (type == 0)
-            Picasso.with(getActivity()).load(R.drawable.demo2).into(mImageView);
+            Picasso.with(getActivity()).load(R.drawable.demo).fit().centerCrop().into(mImageView);
         else if(type == 1)
-            Picasso.with(getActivity()).load(R.drawable.demo1).into(mImageView);
+            Picasso.with(getActivity()).load(R.drawable.demo1).fit().centerCrop().into(mImageView);
         else if(type == 2)
-            Picasso.with(getActivity()).load(R.drawable.demo2).into(mImageView);
+            Picasso.with(getActivity()).load(R.drawable.demo2).fit().centerCrop().into(mImageView);
         else if(type == 3)
-            Picasso.with(getActivity()).load(R.drawable.demo3).into(mImageView);
+            Picasso.with(getActivity()).load(R.drawable.demo3).fit().centerCrop().into(mImageView);
         else
-            Picasso.with(getActivity()).load(R.drawable.demo3).into(mImageView);
+            Picasso.with(getActivity()).load(R.drawable.demo2).fit().centerCrop().into(mImageView);
     }
 
     @Override
