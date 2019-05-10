@@ -15,6 +15,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.up.uwei.shshop.R;
+import com.up.uwei.shshop.utils.LogUtil;
 
 public class RoundImageView extends AppCompatImageView {
     //圆角大小，默认为10
@@ -40,8 +41,8 @@ public class RoundImageView extends AppCompatImageView {
     }
     public void init(Context context, AttributeSet attrs){
         //读取配置
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.Custom_Round_ImageView);
-         mBorderRadius = (int) array.getDimension(R.styleable.Custom_Round_ImageView_radius, 40);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.Custom_View);
+         mBorderRadius = (int) array.getDimension(R.styleable.Custom_View_radius, 40);
          array.recycle();
     }
 
@@ -56,6 +57,7 @@ public class RoundImageView extends AppCompatImageView {
         mPaint.setShader(mBitmapShader);
 //        canvas.drawCircle(getWidth()/2, getHeight()/2, getWidth()/2, mPaint);
         canvas.drawRoundRect(0, 0, getWidth(), getHeight(), mBorderRadius, mBorderRadius, mPaint);
+
     }
     private Bitmap drawToBitmap(Drawable drawable){
         if(drawable instanceof BitmapDrawable){

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="Custom_Round_ImageView">
+    <declare-styleable name="Custom_View">
         <attr name="radius" format="dimension"/>
+        <attr name="text_radis" format="dimension"/>
     </declare-styleable>
 </resources>

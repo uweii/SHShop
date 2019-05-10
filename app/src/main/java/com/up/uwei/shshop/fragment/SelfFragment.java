@@ -35,18 +35,11 @@ public class SelfFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View  v = inflater.inflate(R.layout.navfragment, container,false);
-            RecyclerView recyclerView = v.findViewById(R.id.recylerView);
-            recyclerView.setLayoutManager(new GridLayoutManager(v.getContext(),3));
-            recyclerView.setAdapter(mAdapter);
+            View  v = inflater.inflate(R.layout.self_fragment, container,false);
             return v;
     }
 
     private void init(){
-        mImgs = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-                mImgs.add(R.drawable.demo3);
-        }
-        mAdapter = new ShopRecylerViewAdapter(mImgs);
+
     }
 }

@@ -13,20 +13,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import com.squareup.leakcanary.RefWatcher;
 import com.up.uwei.shshop.BaseFragment;
-import com.up.uwei.shshop.Configs;
-import com.up.uwei.shshop.MyApplication;
 import com.up.uwei.shshop.R;
-import com.up.uwei.shshop.adapter.ShopRecylerViewAdapter;
 import com.up.uwei.shshop.utils.LogUtil;
 
-import org.reactivestreams.Subscription;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -40,18 +35,9 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-
-
-
-//遗留bug，viewpager的第一个fragment隐藏后，任然后台在轮播图片
-
-
-
-
-
-
 public class NavFragment extends BaseFragment {
     @BindView(R.id.vp_photo_advice) ViewPager mVpPhoto;
+    @BindView(R.id.ll_dot_container) LinearLayout mLlDot;
     private View mFragmentView;
     private static String TAG = "NavFragment";
     private Unbinder mUnbinder;
@@ -60,6 +46,9 @@ public class NavFragment extends BaseFragment {
     private Observer mObserver;
     private int mCurrent = 0;
     private ArrayList<PicFragment> mPicFragmentss;
+    private ArrayList<ImageView> mDots;
+    private boolean mLunBoTouch = false; //判断是否认为滑动轮播图
+
     public static NavFragment newInstance(){
         NavFragment fragment = new NavFragment();
         Bundle bundle = new Bundle();
@@ -82,10 +71,25 @@ public class NavFragment extends BaseFragment {
         return mFragmentView;
     }
 
+    /*
+    * 创建ImageView,轮播图的小点
+    * */
+    public ImageView makeDot(){
+        ImageView imageView = new ImageView(getActivity());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(10,10);
+        params.setMargins(10,0,0,0);
+        imageView.setLayoutParams(params);
+        imageView.setBackgroundResource(R.drawable.bg_dot);
+        return imageView;
+    }
+
     private void init(){
         mPicFragmentss = new ArrayList<>();
+        mDots = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             mPicFragmentss.add(PicFragment.getInstance(i));
+            mDots.add(makeDot());
+            mLlDot.addView(mDots.get(mDots.size()-1));
         }
         LunBoAdapter adapter = new LunBoAdapter(getChildFragmentManager());
         mVpPhoto.setAdapter(adapter);
@@ -98,14 +102,26 @@ public class NavFragment extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
-                mCurrent = position;
-                mDisposable.dispose();
-                mObservable.subscribe(mObserver);
+//                mCurrent = position;
+//                mDisposable.dispose();
+//                mObservable.subscribe(mObserver);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if(state == 1){
+                    mLunBoTouch = true;
+                    if(!mDisposable.isDisposed()){
+                        mDisposable.dispose();
+                    }
+                }
+                if(mLunBoTouch && state == 2){
+                    mLunBoTouch = false;
+                    mCurrent = mVpPhoto.getCurrentItem();
+                    clearDots();
+                    mDots.get(mCurrent).setSelected(true);
+                    mObservable.subscribe(mObserver);
+                }
             }
         });
     }
@@ -132,8 +148,9 @@ public class NavFragment extends BaseFragment {
 
             @Override
             public void onNext(Object o) {
-                Log.d(TAG, "i am running");
                 mVpPhoto.setCurrentItem(++mCurrent);
+                clearDots();
+                mDots.get(mCurrent == 5 ? 4 : mCurrent).setSelected(true);
                 if(mCurrent == 5)
                     mCurrent = -1;
             }
@@ -151,6 +168,11 @@ public class NavFragment extends BaseFragment {
         mObservable.subscribe(mObserver);
 
     }
+    public void clearDots(){
+        for (int i = 0; i < mDots.size(); i++){
+            mDots.get(i).setSelected(false);
+        }
+    }
 
     @Override
     public void onDetach() {
@@ -160,7 +182,6 @@ public class NavFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        LogUtil.d("Visiblity:  =======> " + isVisibleToUser );
         if(isVisibleToUser){
             if (null != mObservable)
                 mObservable.subscribe(mObserver);
@@ -176,7 +197,6 @@ public class NavFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume======");
         if(mDisposable.isDisposed()){
             mObservable.subscribe(mObserver);
         }

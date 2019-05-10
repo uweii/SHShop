@@ -11,4 +11,9 @@
     <color name="text_color_normal">#797979</color>
     <color name="green_kuan">#0F9C57</color>
     <color name="bg_nav">#F2F2F2</color>
+    <color name="dot_white">#ffffff</color>
+    <color name="dot_black">#000000</color>
+    <color name="price_color">#FC5E14</color>
+    <color name="yimaRed">#FD2A31</color>
+    <color name="bg_self">#F4F5F9</color>
 </resources>

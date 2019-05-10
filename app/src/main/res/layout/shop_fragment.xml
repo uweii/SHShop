@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_nav">
+    android:layout_height="match_parent">
+    <include layout="@layout/main_action_bar"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerView"
         android:layout_width="match_parent"

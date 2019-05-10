@@ -35,9 +35,9 @@ public class ShopFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            View  v = inflater.inflate(R.layout.navfragment, container,false);
+            View  v = inflater.inflate(R.layout.shop_fragment, container,false);
             RecyclerView recyclerView = v.findViewById(R.id.recylerView);
-            recyclerView.setLayoutManager(new GridLayoutManager(v.getContext(),3));
+            recyclerView.setLayoutManager(new GridLayoutManager(v.getContext(),2));
             recyclerView.setAdapter(mAdapter);
         return v;
     }

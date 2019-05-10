@@ -40,7 +40,7 @@ public class ShopRecylerViewAdapter extends RecyclerView.Adapter {
         ImageView iv_photo;
         public ShopHolder(View itemView) {
             super(itemView);
-            iv_photo = itemView.findViewById(R.id.cv_photo);
+            iv_photo = itemView.findViewById(R.id.iv_photo);
            // tv_name = itemView.findViewByI
         }
     }

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity  {
     @BindView(R.id.ll_add) LinearLayout mLlAdd;
     @BindView(R.id.ll_advice) LinearLayout mLlAdvice;
     @BindView(R.id.ll_mine) LinearLayout mLlMine;
-    @BindView(R.id.tv_search_hint) TextView mTvSearchHint;
+   // @BindView(R.id.tv_search_hint) TextView mTvSearchHint;
 
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTabName;
@@ -106,6 +107,15 @@ public class MainActivity extends AppCompatActivity  {
                     return;
                 }else {
                     clearTab();
+                   /* Window window = getWindow();
+                    //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    //设置状态栏颜色
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        window.setStatusBarColor(color);
+                    }*/
                     mCurrentTab = 3;
                     mViewPager.setCurrentItem(2, false);
                     mIvAdvice.setSelected(true);
@@ -148,7 +158,7 @@ public class MainActivity extends AppCompatActivity  {
         mTabName.add("导航");
         mTabName.add("商城");
         mTabName.add("发布");
-        mTabName.add("推荐");
+        mTabName.add("购物车");
         mTabName.add("我的");
         mFragments.add(NavFragment.newInstance());
         mFragments.add(ShopFragment.newInstance());

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg_nav_green">
+    android:layout_height="match_parent">
+   <include layout="@layout/main_action_bar"/>
 <LinearLayout
+    android:background="@drawable/bg_nav_green"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -391,18 +392,31 @@
             </TableRow>
             </TableLayout>
     </LinearLayout>
-    <android.support.v4.view.ViewPager
+    <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginLeft="15dp"
-        android:background="@drawable/bg_panel"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/vp_photo_advice"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_panel"
+        android:layout_weight="1">
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:id="@+id/vp_photo_advice"
+                android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/ll_dot_container"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </RelativeLayout>
 
-    </android.support.v4.view.ViewPager>
+
 </LinearLayout>
 
 </LinearLayout>
