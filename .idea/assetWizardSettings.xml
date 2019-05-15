@@ -23,7 +23,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/H:/softwares/android/aboutAndroid/set_up/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_navigate_next_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/H:/softwares/android/aboutAndroid/set_up/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_back_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -33,9 +33,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="arrow_right" />
+                                      <entry key="outputName" value="arrow_back" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="b2b2b2" />
+                                      <entry key="themeColor" value="6c6b6b" />
                                     </map>
                                   </option>
                                 </PersistentState>

@@ -19,8 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SearchActivity" />
-        <activity android:name=".activity.PublishActivity"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.PublishActivity" />
+        <activity
+            android:name=".activity.GoodsDetailActivity"
+            android:label="@string/title_activity_goods_detail"
+            android:theme="@style/AppTheme.NoActionBar_Goods_Detail"/>
     </application>
 
 </manifest>

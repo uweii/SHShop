@@ -32,7 +32,10 @@ import com.up.uwei.shshop.fragment.SelfFragment;
 import com.up.uwei.shshop.fragment.ShopFragment;
 import com.up.uwei.shshop.fragment.StarFragment;
 import com.up.uwei.shshop.utils.LogUtil;
+import com.up.uwei.shshop.utils.StatusBar;
 import com.up.uwei.shshop.view.NoSwipeViewPager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity  {
     @BindView(R.id.ll_add) LinearLayout mLlAdd;
     @BindView(R.id.ll_advice) LinearLayout mLlAdvice;
     @BindView(R.id.ll_mine) LinearLayout mLlMine;
-   // @BindView(R.id.tv_search_hint) TextView mTvSearchHint;
+//    @BindView(R.id.tv_search_hint) TextView mTvSearchHint;
 
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTabName;
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity  {
                     return;
                 }else {
                     clearTab();
+                    StatusBar.setColor(this, getResources().getColor(R.color.green_kuan), Configs.STATUS_NORMAL);
                     mCurrentTab = 0;
                     mViewPager.setCurrentItem(0, false);
                     mIvNav.setSelected(true);
@@ -92,6 +96,7 @@ public class MainActivity extends AppCompatActivity  {
                     return;
                 }else {
                     clearTab();
+                    StatusBar.setColor(this, getResources().getColor(R.color.green_kuan), Configs.STATUS_NORMAL);
                     mCurrentTab = 1;
                     mViewPager.setCurrentItem(1, false);
                     mIvShop.setSelected(true);
@@ -107,15 +112,7 @@ public class MainActivity extends AppCompatActivity  {
                     return;
                 }else {
                     clearTab();
-                   /* Window window = getWindow();
-                    //取消设置透明状态栏,使 ContentView 内容不再覆盖状态栏
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                    //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色
-                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                    //设置状态栏颜色
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        window.setStatusBarColor(color);
-                    }*/
+                    StatusBar.setColor(this, getResources().getColor(R.color.green_kuan), Configs.STATUS_NORMAL);
                     mCurrentTab = 3;
                     mViewPager.setCurrentItem(2, false);
                     mIvAdvice.setSelected(true);
@@ -127,6 +124,7 @@ public class MainActivity extends AppCompatActivity  {
                     return;
                 }else {
                     clearTab();
+                    StatusBar.setColor(this, getResources().getColor(R.color.dot_white), Configs.STATUS_LAST);
                     mCurrentTab = 4;
                     mViewPager.setCurrentItem(3, false);
                     mIvMine.setSelected(true);
@@ -134,6 +132,8 @@ public class MainActivity extends AppCompatActivity  {
                 }
                 break;
             case R.id.tv_search_hint:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     private void init(){
+        Configs.init();
         //设置状态栏颜色为黑色
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         mFragments = new ArrayList<>();
@@ -213,6 +214,9 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
 

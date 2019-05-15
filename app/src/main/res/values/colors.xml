@@ -16,4 +16,8 @@
     <color name="price_color">#FC5E14</color>
     <color name="yimaRed">#FD2A31</color>
     <color name="bg_self">#F4F5F9</color>
+    <color name="bg_search">#F1F1F1</color>
+    <color name="bg_add_shop_car">#FEA002</color>
+    <color name="bg_buy">#FF6E01</color>
+    <color name="bg_collect">#FFDA44</color>
 </resources>

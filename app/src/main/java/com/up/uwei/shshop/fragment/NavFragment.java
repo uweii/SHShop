@@ -1,5 +1,6 @@
 package com.up.uwei.shshop.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -7,49 +8,56 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.up.uwei.shshop.BaseFragment;
 import com.up.uwei.shshop.R;
+import com.up.uwei.shshop.activity.SearchActivity;
+import com.up.uwei.shshop.event.LunBoEvent;
 import com.up.uwei.shshop.utils.LogUtil;
 
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class NavFragment extends BaseFragment {
-    @BindView(R.id.vp_photo_advice) ViewPager mVpPhoto;
-    @BindView(R.id.ll_dot_container) LinearLayout mLlDot;
+    @BindView(R.id.vp_photo_advice)
+    ViewPager mVpPhoto;
+    @BindView(R.id.ll_dot_container)
+    LinearLayout mLlDot;
+    @BindView(R.id.tv_search_hint)
+    TextView mSearchHint;
     private View mFragmentView;
     private static String TAG = "NavFragment";
     private Unbinder mUnbinder;
-    private Disposable mDisposable;
-    private Observable<Long> mObservable;
-    private Observer mObserver;
     private int mCurrent = 0;
     private ArrayList<PicFragment> mPicFragmentss;
     private ArrayList<ImageView> mDots;
     private boolean mLunBoTouch = false; //判断是否认为滑动轮播图
+    private Timer t;
 
-    public static NavFragment newInstance(){
+    public static NavFragment newInstance() {
         NavFragment fragment = new NavFragment();
         Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
@@ -59,41 +67,41 @@ public class NavFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("Test", "onCreate");
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFragmentView = inflater.inflate(R.layout.nav_fragment, container, false);
-        ButterKnife.bind(this, mFragmentView);
+        mUnbinder = ButterKnife.bind(this, mFragmentView);
         init();
         return mFragmentView;
     }
 
     /*
-    * 创建ImageView,轮播图的小点
-    * */
-    public ImageView makeDot(){
+     * 创建ImageView,轮播图的小点
+     * */
+    public ImageView makeDot() {
         ImageView imageView = new ImageView(getActivity());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(10,10);
-        params.setMargins(10,0,0,0);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(10, 10);
+        params.setMargins(10, 0, 0, 0);
         imageView.setLayoutParams(params);
         imageView.setBackgroundResource(R.drawable.bg_dot);
         return imageView;
     }
 
-    private void init(){
+    private void init() {
         mPicFragmentss = new ArrayList<>();
         mDots = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             mPicFragmentss.add(PicFragment.getInstance(i));
             mDots.add(makeDot());
-            mLlDot.addView(mDots.get(mDots.size()-1));
+            mLlDot.addView(mDots.get(mDots.size() - 1));
         }
         LunBoAdapter adapter = new LunBoAdapter(getChildFragmentManager());
         mVpPhoto.setAdapter(adapter);
-        startChange();
+        mDots.get(mCurrent).setSelected(true);
         mVpPhoto.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -111,16 +119,14 @@ public class NavFragment extends BaseFragment {
             public void onPageScrollStateChanged(int state) {
                 if(state == 1){
                     mLunBoTouch = true;
-                    if(!mDisposable.isDisposed()){
-                        mDisposable.dispose();
-                    }
+                   EventBus.getDefault().post(new LunBoEvent("stop"));
                 }
                 if(mLunBoTouch && state == 2){
                     mLunBoTouch = false;
                     mCurrent = mVpPhoto.getCurrentItem();
                     clearDots();
                     mDots.get(mCurrent).setSelected(true);
-                    mObservable.subscribe(mObserver);
+                   startLunBoEvent();
                 }
             }
         });
@@ -129,47 +135,31 @@ public class NavFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(null != mDisposable ){
-            if (mDisposable.isDisposed())
-                return;
-            mDisposable.dispose();
+        EventBus.getDefault().post(new LunBoEvent("stop"));
+    }
+
+    @OnClick({R.id.tv_search_hint})
+    public void click(View v) {
+        switch (v.getId()) {
+            case R.id.tv_search_hint:
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
         }
     }
 
-    private void startChange(){
-        mCurrent = mVpPhoto.getCurrentItem();
-        mObservable = Observable.interval(3000, 3000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread());
-        mObserver = new Observer() {
+    private void startLunBoEvent() {
+        if (t == null)
+            t = new Timer();
+        t.schedule(new TimerTask() {
             @Override
-            public void onSubscribe(Disposable d) {
-                mDisposable = d;
+            public void run() {
+                EventBus.getDefault().post(new LunBoEvent("start"));
             }
-
-            @Override
-            public void onNext(Object o) {
-                mVpPhoto.setCurrentItem(++mCurrent);
-                clearDots();
-                mDots.get(mCurrent == 5 ? 4 : mCurrent).setSelected(true);
-                if(mCurrent == 5)
-                    mCurrent = -1;
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        };
-        mObservable.subscribe(mObserver);
-
+        }, 3000);
     }
-    public void clearDots(){
-        for (int i = 0; i < mDots.size(); i++){
+
+    public void clearDots() {
+        for (int i = 0; i < mDots.size(); i++) {
             mDots.get(i).setSelected(false);
         }
     }
@@ -182,27 +172,43 @@ public class NavFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser){
-            if (null != mObservable)
-                mObservable.subscribe(mObserver);
-        }else {
-            if(null != mDisposable ){
-                if (mDisposable.isDisposed())
-                    return;
-                mDisposable.dispose();
-            }
+        // LogUtil.d("=========  Visible");
+        if (isVisibleToUser) {
+            startLunBoEvent();
+        } else {
+            EventBus.getDefault().post(new LunBoEvent("stop"));
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(mDisposable.isDisposed()){
-            mObservable.subscribe(mObserver);
+        //LogUtil.d("=========  onResume");
+        //startLunBoEvent();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void LuoBoEvent(LunBoEvent event) {
+        switch (event.getMessage()) {
+            case "start":
+//                LogUtil.d("收到start消息");
+                mCurrent++;
+                if (mCurrent == 5)
+                    mCurrent = 0;
+                mVpPhoto.setCurrentItem(mCurrent);
+                clearDots();
+                mDots.get(mCurrent).setSelected(true);
+                startLunBoEvent();
+                break;
+            case "stop":
+                if(t != null){
+                    t.cancel();
+                    t = null;
+                }
         }
     }
 
-    class LunBoAdapter extends FragmentPagerAdapter{
+    public class LunBoAdapter extends FragmentPagerAdapter {
 
         public LunBoAdapter(FragmentManager fm) {
             super(fm);
@@ -227,12 +233,12 @@ public class NavFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mUnbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 }

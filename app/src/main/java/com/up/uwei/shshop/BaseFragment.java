@@ -8,7 +8,6 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LogUtil.d("BaseFragment");
         Configs.REF_WATCHER.watch(this);
     }
 }
