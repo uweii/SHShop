@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginBottom="20dp">
+    <View
+        android:layout_width="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="0dp"
+        android:id="@+id/tv_center"/>
+    <ImageView
+        android:layout_toLeftOf="@id/tv_center"
+        android:layout_width="wrap_content"
+        android:id="@+id/iv_loading"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:src="@drawable/load_mini"/>
+    <TextView
+        android:layout_toRightOf="@id/tv_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/search_hint"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:gravity="left|center_vertical"
+        android:text="加载中..."/>
+</RelativeLayout>

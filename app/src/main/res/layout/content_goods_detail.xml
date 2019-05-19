@@ -46,6 +46,7 @@
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
+                    android:id="@+id/tv_price"
                     android:text="￥123"
                     android:textColor="@color/price_color"
                     android:textSize="28sp" />
@@ -134,6 +135,7 @@
             android:layout_height="wrap_content"
             android:background="@color/dot_white"
             android:orientation="horizontal"
+            android:id="@+id/rl_bonus"
             android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingTop="8dp">
@@ -196,6 +198,7 @@
             android:layout_height="wrap_content"
             android:background="@color/dot_white"
             android:orientation="horizontal"
+            android:id="@+id/rl_promise"
             android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingTop="8dp">

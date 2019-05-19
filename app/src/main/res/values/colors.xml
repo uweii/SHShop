@@ -20,4 +20,5 @@
     <color name="bg_add_shop_car">#FEA002</color>
     <color name="bg_buy">#FF6E01</color>
     <color name="bg_collect">#FFDA44</color>
+    <color name="bgn_login_qq">#138ADE</color>
 </resources>

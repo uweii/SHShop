@@ -172,7 +172,7 @@ public class NavFragment extends BaseFragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        // LogUtil.d("=========  Visible");
+//        LogUtil.d("=========:" + isVisibleToUser);
         if (isVisibleToUser) {
             startLunBoEvent();
         } else {
@@ -184,7 +184,9 @@ public class NavFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         //LogUtil.d("=========  onResume");
-        //startLunBoEvent();
+        if(t == null){
+            startLunBoEvent();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

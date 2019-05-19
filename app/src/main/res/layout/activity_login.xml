@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/dot_white"
+    tools:context=".activity.LoginActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/green_kuan"
+        android:gravity="center"
+        android:orientation="horizontal"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+        <LinearLayout
+            android:id="@+id/ll_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="right"
+                android:src="@drawable/arrow_back_white"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="left"
+                android:textColor="@color/dot_white"/>
+        </LinearLayout>
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_reg"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textSize="20sp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dot_white"
+            android:text="注册" />
+    </RelativeLayout>
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/loginicon"/>
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:textColorHint="@color/search_hint"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="6"
+                    android:textColorHint="@color/search_hint"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/btn_login"
+                style="?android:textAppearanceSmall"
+                android:background="@drawable/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textColor="@color/dot_white"
+                android:layout_marginTop="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textSize="18sp"
+                android:layout_marginRight="50dp"
+                android:layout_marginLeft="50dp"
+                android:text="@string/action_sign_in"
+                android:textStyle="bold" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="50dp"
+                android:id="@+id/btn_login_qq"
+                android:background="@drawable/btn_login_qq"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/qq_icon"/>
+                <TextView
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textColor="@color/dot_white"
+                    android:textSize="18sp"
+                    android:text="@string/login_by_qq"
+                    android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+</LinearLayout>

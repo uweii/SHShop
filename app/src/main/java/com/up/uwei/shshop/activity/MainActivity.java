@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity  {
                 break;
             case R.id.ll_add:
                 Toast.makeText(this, "发布宝贝", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this, PublishActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.ll_advice:
                 if(mCurrentTab == 3){
